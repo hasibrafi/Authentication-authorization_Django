@@ -1,0 +1,14 @@
+from django.contrib import admin
+from django.urls import  path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('authentication_app.urls')),
+
+
+
+    
+    # path('registration/', include('authentication_app.urls')),
+    # path('login/', include('authentication_app.urls')),
+
+]

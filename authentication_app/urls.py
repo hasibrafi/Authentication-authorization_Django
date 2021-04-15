@@ -7,6 +7,7 @@ urlpatterns = [
     path ('login/', views.loginPage, name="login"),
     path ('logout/', views.logoutUser, name="logout"),
 
+    path ('user/', views.userPage, name="userPage"),
     path ('customers/', views.customers, name="customers"),
     path ('customers/<str:pk>/', views.customers, name="customers"),
 

@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from . decorators import *
 from . models import *
 from . forms import *
 from . filters import *
@@ -12,6 +13,7 @@ from . filters import *
 # Create your views here.
 
 @login_required(login_url='login') 
+@allowed_users(allowed_roles=['admin'])
 def index(request):
     orders = Order.objects.all()
     customers = Customer.objects.all()
@@ -25,6 +27,8 @@ def index(request):
 
     return render (request,'index.html', context)
 
+
+@unauthenticated_user
 def registration(request):
     form = CreateUserForm()
 
@@ -40,6 +44,8 @@ def registration(request):
     context = {'form':form}
     return render (request,'registration.html', context)
 
+
+@unauthenticated_user
 def loginPage(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -59,6 +65,11 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
+def userPage(request):
+    context = {}
+    return render(request,'user.html',context)
+
 
 @login_required(login_url='login')     
 def customers(request, pk="1"):
